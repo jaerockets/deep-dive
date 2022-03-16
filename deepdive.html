@@ -14,12 +14,34 @@
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
+        var frameCount = 0
+        var animateX=50
+        var animateY=250
+        directionX = 'right'
         ctx.fillStyle='white'
         ctx.textBaseline='top'
         ctx.font='20px Arial'
         ctx.fillText('This is an example of text drawn with the 2d canvas renderer', 0, 0)
         ctx.fillStyle='#00ffee'
         ctx.fillRect(50, 50, 100, 100)
+        function animate() {
+            frameCount+=1
+            ctx.clearRect(animateX, animateY, 100, 100)
+            if (directionX=='right') {
+                animateX +=5
+                }
+            if (directionX =='left') {
+                animateX -=5
+            }
+            if (animateX+100>= canvas.width) {
+                directionX='left'
+            }
+            if (animateX<= 0) {
+                directionX='right'
+            }
+            ctx.fillRect(animateX, animateY, 100, 100)
+            
+        }
         ctx.beginPath()
             ctx.moveTo(300, 50) //sets the initial draw point
             ctx.lineTo(250, 150) // draws line from intial point to specified point
@@ -31,7 +53,7 @@
         img.onload = function() {
             ctx.drawImage(img, 550, 0)
         }
-        
+        setInterval(animate, 1000/60)
     </script>
 </body>
 
